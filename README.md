@@ -1,4 +1,4 @@
-# bankproject
+# bankproject requirements
 
 PROGRAMMING PROJ. #4: Banking Application OOP & Exceptions
 
