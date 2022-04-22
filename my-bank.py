@@ -54,6 +54,8 @@ def choosy():
             accounts.check(owner, acctnum)
             if accounts.status:
                 user = Account(owner, acctnum, initialbal)
+                # i don't want to call the Account function this way, but i'm not sure
+                # how to instanciate Account uniquely per user input
 
             else:
                 print("Something's wrong with the Accounts")
