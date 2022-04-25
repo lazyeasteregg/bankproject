@@ -1,5 +1,4 @@
-from BankAccount import Account, Accounts
-from time import strftime, gmtime
+from newBankAccount import Bank
 
 def show_options():
     """
@@ -29,15 +28,8 @@ def nicebal(x):
         twodecimals = "{:.2f}".format(x)
         return twodecimals
 
-def txlog(account, balance):
-    transactions = ()
-    timestamp = strftime("%Y %b %d %H-%M-%S", gmtime())
-    entry = list([timestamp, balance])
-    transactions.add(account, entry)
-    return transactions
 
-def choosy():
-    accounts = Accounts()
+def picky():
     user_choice = 0
     while user_choice != 6:
         try:
@@ -47,27 +39,24 @@ def choosy():
             print("Please try again. Enter an integer between 1 and 6\n")
         if user_choice == 1:
             owner = input("Enter the owner's name: ")
-            user = owner
             acctnum = input("Enter the account number: ")
             initialbal = float(input("Enter the initial balance: $ "))
             #try:
-            accounts.check(owner, acctnum)
-            if accounts.status:
-                user = Account(owner, acctnum, initialbal)
-                # i don't want to call the Account function this way, but i'm not sure
-                # how to instanciate Account uniquely per user input
-
+            myuser = Bank(owner, acctnum, initialbal)
+            if myuser.txlog[acctnum]:
+                print("Account Number: ", acctnum, "already exists")
             else:
-                print("Something's wrong with the Accounts")
+                myuser.tslog()
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)
         elif user_choice == 2:
-            account_num = int(input("Enter the account number: "))
+            acctnum = int(input("Enter the account number: "))
             value = float(input("Enter the deposit amount: $ "))
-#            timestamp = strftime("%Y %b %d %H-%M-%S", gmtime())
-            if accounts.status:
-                user.deposit(account_num, value)
+            if acctnum in myuser.txlog[acctnum]:
+                myuser.deposit(acctnum, value)
+            else:
+                print("You need to open an account first")
 
     # this elif statement catches when the user enters 3, (Withdrawal)
         elif user_choice == 3:
@@ -77,11 +66,11 @@ def choosy():
             pass
     # this elif statement catches when the user enters 5, (show transactions)
         elif user_choice == 5:
-            user.showlog()
+            print(myuser.txlog())
         else:
             print("Thank you for using my bank application.\n")
 
-choosy()
+picky()
 
 """
 problems with my program: 
