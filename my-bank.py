@@ -1,4 +1,4 @@
-from newBankAccount import Bank
+from newBankAccount import BankAccount
 
 def show_options():
     """
@@ -31,6 +31,7 @@ def nicebal(x):
 
 def picky():
     user_choice = 0
+    accountlog = {}
     while user_choice != 6:
         try:
             user_choice = show_options()
@@ -42,11 +43,12 @@ def picky():
             acctnum = input("Enter the account number: ")
             initialbal = float(input("Enter the initial balance: $ "))
             #try:
-            myuser = Bank(owner, acctnum, initialbal)
-            if myuser.txlog[acctnum]:
+            myuser = BankAccount(owner, acctnum, initialbal)
+            if acctnum in accountlog:
                 print("Account Number: ", acctnum, "already exists")
             else:
                 myuser.tslog()
+                accountlog[acctnum] = initialbal
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)

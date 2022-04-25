@@ -1,6 +1,6 @@
 from time import strftime, localtime
 
-class Bank:
+class BankAccount:
     txlog = {}
     def __init__(self, name, accountnumber, initialBalance = 0):
         self.name = name
@@ -29,13 +29,19 @@ class Bank:
         self.tslog()
 
 # this works!
-#user1 = Bank("john", 87324, 9831)
-#user1.tslog()
-#print(user1.txlog[87324])
-# so, tslog has to run before txlog
-#
-#user1.deposit(87324, 10000)
-#print(user1.txlog)
-#user1.withdrawal(87324, 3000)
-#print(user1.txlog)
-#print(user1.visitor())
+# user1 = bankaccount("john", 87324, 9831)
+# user2 = bankaccount("frank", 1234, 20)
+# user1.tslog()
+# user2.tslog()
+# print(user1.txlog[87324])
+# print(user2.txlog[1234])
+# # so, tslog has to run before txlog
+# #
+# user1.deposit(87324, 10000)
+# #print(user1.txlog)
+# user2.deposit(1234, 10000)
+# #print(user2.txlog)
+# user1.withdrawal(87324, 3000)
+# user2.withdrawal(1234, 3000)
+# print(user1.txlog)
+# #print(user2.txlog)
