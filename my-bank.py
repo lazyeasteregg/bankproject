@@ -29,9 +29,8 @@ def nicebal(x):
         return twodecimals
 
 
-def picky():
+def picky(account_dictionary):
     user_choice = 0
-    accountlog = {}
     while user_choice != 6:
         try:
             user_choice = show_options()
@@ -44,11 +43,11 @@ def picky():
             initialbal = float(input("Enter the initial balance: $ "))
             #try:
             myuser = BankAccount(owner, acctnum, initialbal)
-            if acctnum in accountlog:
+            if acctnum in account_dictionary:
                 print("Account Number: ", acctnum, "already exists")
             else:
                 myuser.tslog()
-                accountlog[acctnum] = initialbal
+                account_dictionary[acctnum] = initialbal
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)
@@ -72,7 +71,7 @@ def picky():
         else:
             print("Thank you for using my bank application.\n")
 
-picky()
+picky({})
 
 """
 problems with my program: 
