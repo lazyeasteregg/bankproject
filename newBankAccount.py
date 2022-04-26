@@ -1,42 +1,46 @@
-from time import strftime, localtime
+#from time import strftime, localtime
 
 class BankAccount:
-    txlog = {}
     def __init__(self, name, accountnumber, initialBalance = 0):
         self.name = name
         self.accountnum = accountnumber
         self.balance = initialBalance
-        self.tstamp = strftime("%Y %b %d %H-%M-%S", localtime())
+        self.acctlog = {}
+        self.openacct = None
+#        self.tstamp = strftime("%Y %b %d %H-%M-%S", localtime())
 
     def tslog(self):
         tx = tuple([self.balance, self.tstamp])
         self.txlog[self.accountnum] = tx
 
     def customer(self):
-        return "Name: {} \t\tAccount: {} \t\tBalance: ${}".format(self.name, self.accountnum, self.balance)
+        self.openacct = BankAccount(self.name, self.accountnum, self.balance)
+        self.acctlog[self.accountnum] = (self.name, self.balance)
+
+#        return "Name: {} \t\tAccount: {} \t\tBalance: ${}".format(self.name, self.accountnum, self.balance)
+
 
     def deposit(self, accountnumber, amount):
         self.accountnum = accountnumber
         self.balance += amount
-        self.tslog()
+        self.acctlog[self.accountnum] = (self.name, self.balance)
+
 
     def withdrawal(self, accountnumber, amount):
         self.accountnum = accountnumber
         self.balance -= amount
-        self.tslog()
+        self.acctlog[self.accountnum] = (self.name, self.balance)
 
-class CustomerAccount:
-    def __init__(self, myname, accountnumber, amount = 0):
-        self.myname = myname
-        self.acct = accountnumber
-        self.value = amount
 
 # this works!
-# user1 = bankaccount("john", 87324, 9831)
-# user2 = bankaccount("frank", 1234, 20)
-# user1.tslog()
-# user2.tslog()
-# print(user1.txlog[87324])
+#user1 = BankAccount("john", 87324, 9831)
+#user2 = BankAccount("frank", 1234, 20)
+
+#user1.customer()
+#user2.customer()
+#print(user1.acctlog[87324])
+#if user1.name in user1.acctlog[87324]:
+#    print("got it")
 # print(user2.txlog[1234])
 # # so, tslog has to run before txlog
 # #

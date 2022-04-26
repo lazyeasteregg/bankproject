@@ -30,7 +30,8 @@ def nicebal(x):
         return twodecimals
 
 
-def picky(account_dictionary, transactions):
+def picky(account_dictionary):
+    transactions = []
     user_choice = 0
     while user_choice != 6:
         try:
@@ -40,14 +41,14 @@ def picky(account_dictionary, transactions):
             print("Please try again. Enter an integer between 1 and 6\n")
         if user_choice == 1:
             owner = input("Enter the owner's name: ")
-            acctnum = input("Enter the account number: ")
+            acctnum = int(input("Enter the account number: "))
             initialbal = float(input("Enter the initial balance: $ "))
             #try:
             myuser = BankAccount(owner, acctnum, initialbal)
             if acctnum in account_dictionary:
                 print("Account Number: ", acctnum, "already exists")
             else:
-                myuser.tslog()
+                myuser.customer()
                 account_dictionary[acctnum] = initialbal
             #except:
                 #print("something didn't work")
@@ -56,9 +57,9 @@ def picky(account_dictionary, transactions):
             acctnum = int(input("Enter the account number: "))
             value = float(input("Enter the deposit amount: $ "))
             timestamp = strftime("%Y %b %d %H-%M-%S", localtime())
-            if acctnum in myuser.txlog[acctnum]:
+            if myuser.acctlog[acctnum]:
                 myuser.deposit(acctnum, value)
-                transactions.add(tuple(("Deposit" + "\t\t$" + value + "\t\t" + timestamp)))
+                transactions.append(tuple(("Deposit" + "\t\t$" + value + "\t\t" + timestamp)))
             else:
                 print("You need to open an account first")
 
@@ -74,7 +75,7 @@ def picky(account_dictionary, transactions):
         else:
             print("Thank you for using my bank application.\n")
 
-picky({}, [])
+picky({})
 
 """
 problems with my program: 
