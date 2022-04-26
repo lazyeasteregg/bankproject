@@ -1,4 +1,5 @@
 from newBankAccount import BankAccount
+from time import strftime, localtime
 
 def show_options():
     """
@@ -29,7 +30,7 @@ def nicebal(x):
         return twodecimals
 
 
-def picky(account_dictionary):
+def picky(account_dictionary, transactions):
     user_choice = 0
     while user_choice != 6:
         try:
@@ -54,8 +55,10 @@ def picky(account_dictionary):
         elif user_choice == 2:
             acctnum = int(input("Enter the account number: "))
             value = float(input("Enter the deposit amount: $ "))
+            timestamp = strftime("%Y %b %d %H-%M-%S", localtime())
             if acctnum in myuser.txlog[acctnum]:
                 myuser.deposit(acctnum, value)
+                transactions.add(tuple(("Deposit" + "\t\t$" + value + "\t\t" + timestamp)))
             else:
                 print("You need to open an account first")
 
@@ -71,7 +74,7 @@ def picky(account_dictionary):
         else:
             print("Thank you for using my bank application.\n")
 
-picky({})
+picky({}, [])
 
 """
 problems with my program: 

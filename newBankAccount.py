@@ -8,9 +8,6 @@ class BankAccount:
         self.balance = initialBalance
         self.tstamp = strftime("%Y %b %d %H-%M-%S", localtime())
 
-#    def open_acct(self):
-#        return "name: {} \t account: {} \t balance: ${} \t date: {}".format(self.name, self.accountnum, self.balance, self.tstamp)
-
     def tslog(self):
         tx = tuple([self.balance, self.tstamp])
         self.txlog[self.accountnum] = tx
@@ -27,6 +24,12 @@ class BankAccount:
         self.accountnum = accountnumber
         self.balance -= amount
         self.tslog()
+
+class CustomerAccount:
+    def __init__(self, myname, accountnumber, amount = 0):
+        self.myname = myname
+        self.acct = accountnumber
+        self.value = amount
 
 # this works!
 # user1 = bankaccount("john", 87324, 9831)
