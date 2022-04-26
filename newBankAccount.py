@@ -5,17 +5,17 @@ class BankAccount:
         self.name = name
         self.accountnum = accountnumber
         self.balance = initialBalance
-        self.acctlog = {}
+        self.acctlog = []
         self.openacct = None
 #        self.tstamp = strftime("%Y %b %d %H-%M-%S", localtime())
 
-    def tslog(self):
-        tx = tuple([self.balance, self.tstamp])
-        self.txlog[self.accountnum] = tx
+#    def tslog(self):
+#        tx = tuple([self.balance, self.tstamp])
+#        self.txlog[self.accountnum] = tx
 
     def customer(self):
         self.openacct = BankAccount(self.name, self.accountnum, self.balance)
-        self.acctlog[self.accountnum] = (self.name, self.balance)
+        self.acctlog.append((self.name, self.balance))
 
 #        return "Name: {} \t\tAccount: {} \t\tBalance: ${}".format(self.name, self.accountnum, self.balance)
 
@@ -23,13 +23,15 @@ class BankAccount:
     def deposit(self, accountnumber, amount):
         self.accountnum = accountnumber
         self.balance += amount
-        self.acctlog[self.accountnum] = (self.name, self.balance)
+        self.acctlog.append((self.name, self.balance))
+#        self.acctlog[self.accountnum] = (self.name, self.balance)
 
 
     def withdrawal(self, accountnumber, amount):
         self.accountnum = accountnumber
         self.balance -= amount
-        self.acctlog[self.accountnum] = (self.name, self.balance)
+        self.acctlog.append((self.name, self.balance))
+#        self.acctlog[self.accountnum] = (self.name, self.balance)
 
 
 # this works!

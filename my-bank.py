@@ -49,7 +49,7 @@ def picky(account_dictionary):
                 print("Account Number: ", acctnum, "already exists")
             else:
                 myuser.customer()
-                account_dictionary[acctnum] = initialbal
+                account_dictionary[acctnum] = owner
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)
@@ -57,9 +57,9 @@ def picky(account_dictionary):
             acctnum = int(input("Enter the account number: "))
             value = float(input("Enter the deposit amount: $ "))
             timestamp = strftime("%Y %b %d %H-%M-%S", localtime())
-            if myuser.acctlog[acctnum]:
+            if acctnum in account_dictionary:
                 myuser.deposit(acctnum, value)
-                transactions.append(tuple(("Deposit" + "\t\t$" + value + "\t\t" + timestamp)))
+#                transactions.append(tuple(("Deposit" + "\t\t$" + str(value) + "\t\t" + str(timestamp))))
             else:
                 print("You need to open an account first")
 
@@ -71,18 +71,9 @@ def picky(account_dictionary):
             pass
     # this elif statement catches when the user enters 5, (show transactions)
         elif user_choice == 5:
-            print(myuser.txlog())
+            acctnum = int(input("Enter the account number: "))
+            print(transactions)
         else:
             print("Thank you for using my bank application.\n")
 
 picky({})
-
-"""
-problems with my program: 
-- tx log has \n per entry, rather than one line 
-- tx log doesn't distinguish between accounts 
-- time stamp is in GMT; i need to print in PST (maybe fixed?)
-- need to look at the course program from unit 3
-- use a list of tuples for txlog: time and amount
-
-"""
