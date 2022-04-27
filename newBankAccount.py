@@ -20,5 +20,6 @@ class BankAccount:
         self.acctlog.append(("Withdrawal", amount, datetime.now()))
 
     def list_transactions(self):
-        for type_, value, ts in self.transactions:
-            print(f'{type_} ${value:.02f} {ts.strftime("%Y-%m-%d")}')
+        print("Transaction type\t Amount \t\t\t Date")
+        for type_, value, ts in self.acctlog:
+            print(f'{type_} \t\t\t${value:.02f} \t\t\t\t{ts.strftime("%Y %b %d, %H:%M:%S")}')
