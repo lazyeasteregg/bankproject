@@ -1,3 +1,8 @@
+"""
+Name: Stacy Chen
+Date: 4/19/2022
+Description: A simple banking application that illustrates object-oriented programming and exceptions
+"""
 from newBankAccount import BankAccount
 from time import strftime, localtime
 
@@ -21,6 +26,10 @@ def show_options():
 
 
 def picky(account_dictionary):
+    """
+    This is the main function
+    :param account_dictionary: the account_dictionary keeps track of all the accounts to avoid duplicates
+    """
     user_choice = 0
     acctnum = None
     while user_choice != 6:
