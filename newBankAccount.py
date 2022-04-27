@@ -7,6 +7,7 @@ class BankAccount:
         self.balance = initialBalance
         self.acctlog = []
         self.openacct = None
+        return name, accountnumber, initialBalance
 #        self.tstamp = strftime("%Y %b %d %H-%M-%S", localtime())
 
 #    def tslog(self):

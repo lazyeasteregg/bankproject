@@ -44,12 +44,12 @@ def picky(account_dictionary):
             acctnum = int(input("Enter the account number: "))
             initialbal = float(input("Enter the initial balance: $ "))
             #try:
-            myuser = BankAccount(owner, acctnum, initialbal)
+            account = BankAccount(owner, acctnum, initialbal)
             if acctnum in account_dictionary:
                 print("Account Number: ", acctnum, "already exists")
             else:
-                myuser.customer()
-                account_dictionary[acctnum] = owner
+                account.customer()
+                account_dictionary[acctnum] = account
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)
@@ -58,14 +58,16 @@ def picky(account_dictionary):
             value = float(input("Enter the deposit amount: $ "))
             timestamp = strftime("%Y %b %d %H-%M-%S", localtime())
             if acctnum in account_dictionary:
-                myuser.deposit(acctnum, value)
+                account.deposit(acctnum, value)
 #                transactions.append(tuple(("Deposit" + "\t\t$" + str(value) + "\t\t" + str(timestamp))))
             else:
                 print("You need to open an account first")
 
     # this elif statement catches when the user enters 3, (Withdrawal)
         elif user_choice == 3:
-            pass
+            print(account_dictionary)
+            for i, j in account_dictionary.items():
+                print(i, " : ",  j)
     # this elif statement catches when the user enters 4, (show balance)
         elif user_choice == 4:
             pass
