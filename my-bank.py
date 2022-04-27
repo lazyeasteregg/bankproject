@@ -20,16 +20,6 @@ def show_options():
     return valid_input
 
 
-def nicebal(x):
-        """
-        A formatting function to take an input and make it print with two decimal places
-        :param x: X will be a float, in this program usually balance, withdrawal, or deposit
-        :return:
-        """
-        twodecimals = "{:.2f}".format(x)
-        return twodecimals
-
-
 def picky(account_dictionary):
     transactions = []
     user_choice = 0
@@ -40,37 +30,43 @@ def picky(account_dictionary):
         except (RuntimeError, TypeError, NameError):
             print("Please try again. Enter an integer between 1 and 6\n")
         if user_choice == 1:
-            owner = input("Enter the owner's name: ")
             acctnum = int(input("Enter the account number: "))
-            initialbal = float(input("Enter the initial balance: $ "))
-            #try:
-            account = BankAccount(owner, acctnum, initialbal)
             if acctnum in account_dictionary:
                 print("Account Number: ", acctnum, "already exists")
             else:
-                account.customer()
+                owner = input("Enter the owner's name: ")
+                initialbal = float(input("Enter the initial balance: $ "))
+            #try:
+                account = BankAccount(owner, acctnum, initialbal)
                 account_dictionary[acctnum] = account
             #except:
                 #print("something didn't work")
     # this elif statement catches when the user enters 2, (Deposit)
         elif user_choice == 2:
             acctnum = int(input("Enter the account number: "))
-            value = float(input("Enter the deposit amount: $ "))
-            timestamp = strftime("%Y %b %d %H-%M-%S", localtime())
-            if acctnum in account_dictionary:
-                account.deposit(acctnum, value)
-#                transactions.append(tuple(("Deposit" + "\t\t$" + str(value) + "\t\t" + str(timestamp))))
+            account = account_dictionary.get(acctnum)
+            if account is None:
+                raise Exception("Account number doesn't exist")
             else:
-                print("You need to open an account first")
+                value = float(input("Enter the deposit amount: $ "))
+                account.deposit(value)
 
     # this elif statement catches when the user enters 3, (Withdrawal)
         elif user_choice == 3:
-            print(account_dictionary)
-            for i, j in account_dictionary.items():
-                print(i, " : ",  j)
+            acctnum = int(input("Enter the account number: "))
+            account = account_dictionary.get(acctnum)
+            if account is None:
+                raise Exception("Account number doesn't exist")
+            else:
+                value = float(input("Enter the withdrawal amount: $ "))
+                account.withdrawal(value)
+
     # this elif statement catches when the user enters 4, (show balance)
         elif user_choice == 4:
-            pass
+            account = account_dictionary.get(acctnum)
+            if account is None:
+                raise Exception('does not exist')
+            print(f'${account.balance:.02f}')
     # this elif statement catches when the user enters 5, (show transactions)
         elif user_choice == 5:
             acctnum = int(input("Enter the account number: "))
