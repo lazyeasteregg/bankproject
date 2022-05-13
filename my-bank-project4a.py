@@ -1,11 +1,10 @@
 """
 Name: Stacy Chen
-Date: 5/12/2022
-Description: A simple banking application that illustrates object-oriented programming and exceptions. This version
-includes the shelve module, to persist data via pickles.
+Date: 4/19/2022
+Description: A simple banking application that illustrates object-oriented programming and exceptions
 """
-import shelve
 from newBankAccount import BankAccount
+from time import strftime, localtime
 
 def show_options():
     """
@@ -26,26 +25,22 @@ def show_options():
     return valid_input
 
 
-def picky():
+def picky(account_dictionary):
     """
     This is the main function
     :param account_dictionary: the account_dictionary keeps track of all the accounts to avoid duplicates
     """
+    user_choice = 0
     acctnum = None
-    flag = False
-    myaccounts = shelve.open("accounts.dat", "c", writeback=True)
-    while not flag:
-        user_choice = 0
+    while user_choice != 6:
         try:
             user_choice = show_options()
             print("You entered: ", user_choice, "\n")
         except (RuntimeError, TypeError, NameError):
             print("Please try again. Enter an integer between 1 and 6\n")
-        if user_choice < 1 or user_choice > 6:
-            print("Invalid choice. Please try again")
-        elif user_choice == 1:
+        if user_choice == 1:
             acctnum = input("Enter the account number: ")
-            if acctnum in myaccounts:
+            if acctnum in account_dictionary:
                 print("Account Number: ", acctnum, "already exists")
             else:
                 owner = input("Enter the owner's name: ")
@@ -54,12 +49,11 @@ def picky():
                 except:
                     print("please enter a number")
                 account = BankAccount(owner, acctnum, initialbal)
-                myaccounts[acctnum] = account
-                myaccounts.sync()
+                account_dictionary[acctnum] = account
     # this elif statement catches when the user enters 2, (Deposit)
         elif user_choice == 2:
             acctnum = input("Enter the account number: ")
-            account = myaccounts.get(acctnum)
+            account = account_dictionary.get(acctnum)
             if account is None:
                 raise Exception("Account number doesn't exist")
             else:
@@ -69,14 +63,13 @@ def picky():
                         print("Please enter a positive number")
                     else:
                         account.deposit(value)
-                        myaccounts.sync()
                 except:
                     print("please enter a number")
 
     # this elif statement catches when the user enters 3, (Withdrawal)
         elif user_choice == 3:
             acctnum = input("Enter the account number: ")
-            account = myaccounts.get(acctnum)
+            account = account_dictionary.get(acctnum)
             if account is None:
                 raise Exception("Account number doesn't exist")
             else:
@@ -87,26 +80,21 @@ def picky():
                     print("You can't withdraw a negative amount")
                 else:
                     account.withdrawal(value)
-                    myaccounts.sync()
 
-        # this elif statement catches when the user enters 4, (show balance)
+    # this elif statement catches when the user enters 4, (show balance)
         elif user_choice == 4:
             acctnum = input("Enter the account number: ")
-            account = myaccounts.get(acctnum)
+            account = account_dictionary.get(acctnum)
             if account is None:
                 raise Exception('does not exist')
             print(f'${account.balance:.02f}')
     # this elif statement catches when the user enters 5, (show transactions)
         elif user_choice == 5:
             acctnum = input("Enter the account number: ")
-            account = myaccounts.get(acctnum)
+            account = account_dictionary.get(acctnum)
             if account is None:
                 raise Exception('does not exist')
             else:
                 account.list_transactions()
-        elif user_choice == 6:
-            print("Thank you for banking with us")
-            myaccounts.close()
-            flag = True
 
-picky()
+picky({})
